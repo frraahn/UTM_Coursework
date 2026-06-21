@@ -1,0 +1,223 @@
+Part A
+
+Question A1
+
+use clinicdb
+db.createCollection("appointments")
+db.createCollection("loginSessions")
+
+Question A2
+
+appointments collection document:
+
+db.appointments.insertMany([
+  {
+    appointmentId: "A001",
+    patientName: "Zara",
+    doctor: "Dr. Husin",
+    department: "Pediatrics",
+    status: "COMPLETED",
+    fee: 200,
+    appointmentDate: ISODate("2025-01-05T09:00:00Z")
+  },
+  {
+    appointmentId: "A002",
+    patientName: "Aisy",
+    doctor: "Dr. Alif",
+    department: "Cardiology",
+    status: "PENDING",
+    fee: 120,
+    appointmentDate: ISODate("2025-01-06T10:00:00Z")
+  },
+  {
+    appointmentId: "A003",
+    patientName: "Nur",
+    doctor: "Dr. Lee",
+    department: "Dermatology",
+    status: "COMPLETED",
+    fee: 300,
+    appointmentDate: ISODate("2025-01-07T11:00:00Z")
+  },
+  {
+    appointmentId: "A004",
+    patientName: "Ain",
+    doctor: "Dr. Qawie",
+    department: "Neurology",
+    status: "CANCELLED",
+    fee: 150,
+    appointmentDate: ISODate("2025-01-08T09:30:00Z")
+  },
+  {
+    appointmentId: "A005",
+    patientName: "Farhan",
+    doctor: "Dr. Hana",
+    department: "Neurology",
+    status: "COMPLETED",
+    fee: 150,
+    appointmentDate: ISODate("2025-01-09T14:00:00Z")
+  },
+  {
+    appointmentId: "A006",
+    patientName: "Arisa",
+    doctor: "Dr. Husin",
+    department: "Cardiology",
+    status: "COMPLETED",
+    fee: 100,
+    appointmentDate: ISODate("2025-01-10T15:00:00Z")
+  },
+  {
+    appointmentId: "A007",
+    patientName: "Fauzan",
+    doctor: "Dr. Lee",
+    department: "Dermatology",
+    status: "PENDING",
+    fee: 300,
+    appointmentDate: ISODate("2025-01-11T08:30:00Z")
+  },
+  {
+    appointmentId: "A008",
+    patientName: "Nabil",
+    doctor: "Dr. Alif",
+    department: "Neurology",
+    status: "COMPLETED",
+    fee: 160,
+    appointmentDate: ISODate("2025-01-12T10:30:00Z")
+  },
+  {
+    appointmentId: "A009",
+    patientName: "Shai",
+    doctor: "Dr. Lee",
+    department: "Neurology",
+    status: "CANCELLED",
+    fee: 160,
+    appointmentDate: ISODate("2025-01-13T13:00:00Z")
+  },
+  {
+    appointmentId: "A010",
+    patientName: "Tasha",
+    doctor: "Dr. Qawie",
+    department: "Pediatrics",
+    status: "COMPLETED",
+    fee: 200,
+    appointmentDate: ISODate("2025-01-14T16:00:00Z")
+  }
+])
+
+loginSession collection document:
+
+db.loginSessions.insertMany([
+  {
+    staffId: "S001",
+    staffName: "Husin",
+    role: "Doctor",
+    status: "ACTIVE",
+    ipAddress: "192.168.1.10",
+    loginTime: ISODate("2025-01-15T08:00:00Z")
+  },
+  {
+    staffId: "S002",
+    staffName: "Ika",
+    role: "Nurse",
+    status: "ACTIVE",
+    ipAddress: "192.168.1.11",
+    loginTime: ISODate("2025-01-15T08:10:00Z")
+  },
+  {
+    staffId: "S003",
+    staffName: "Alif",
+    role: "Receptionist",
+    status: "INACTIVE",
+    ipAddress: "192.168.1.12",
+    loginTime: ISODate("2025-01-01T09:00:00Z")
+  },
+  {
+    staffId: "S004",
+    staffName: "Alia",
+    role: "Pharmacist",
+    status: "ACTIVE",
+    ipAddress: "192.168.1.13",
+    loginTime: ISODate("2025-01-15T08:20:00Z")
+  },
+  {
+    staffId: "S005",
+    staffName: "Nur",
+    role: "Doctor",
+    status: "INACTIVE",
+    ipAddress: "192.168.1.14",
+    loginTime: ISODate("2025-01-02T10:00:00Z")
+  },
+  {
+    staffId: "S006",
+    staffName: "Hafiz",
+    role: "Receptionist",
+    status: "ACTIVE",
+    ipAddress: "192.168.1.15",
+    loginTime: ISODate("2025-01-15T08:30:00Z")
+  },
+  {
+    staffId: "S007",
+    staffName: "Hadif",
+    role: "Pharmacist",
+    status: "ACTIVE",
+    ipAddress: "192.168.1.16",
+    loginTime: ISODate("2025-01-15T08:40:00Z")
+  },
+  {
+    staffId: "S008",
+    staffName: "Lee",
+    role: "Doctor",
+    status: "ACTIVE",
+    ipAddress: "192.168.1.17",
+    loginTime: ISODate("2025-01-03T11:00:00Z")
+  },
+  {
+    staffId: "S009",
+    staffName: "Farra",
+    role: "Nurse",
+    status: "INACTIVE",
+    ipAddress: "192.168.1.18",
+    loginTime: ISODate("2025-01-15T08:50:00Z")
+  },
+  {
+    staffId: "S010",
+    staffName: "Qawie",
+    role: "Doctor",
+    status: "ACTIVE",
+    ipAddress: "192.168.1.19",
+    loginTime: ISODate("2025-01-15T09:00:00Z")
+  }
+])
+
+Part B
+
+Question B1
+
+db.appointments.find({status: "COMPLETED", fee: {$gte: 100, $lte: 300}}, {_id: 0, appointmentId: 1, patientName: 1, department: 1, fee: 1}).sort({department: 1, fee: -1})
+
+Question B2
+
+db.appointments.aggregate([{$group: {_id: "$department", totalAppointments: {$sum: 1}, totalFees: {$sum: "$fee"}}}, {$sort: {totalFees: -1}}])
+
+Part C
+
+Question C1
+
+db.loginSessions.find({status: "ACTIVE"}, {_id: 0, staffName: 1, role: 1, ipAddress: 1, loginTime: 1}).sort({loginTime: -1})
+
+Question C2
+
+(a)db.loginSessions.distinct("ipAddress", {status: "ACTIVE"})
+(b)db.loginSessions.aggregate([{$match: {status: "ACTIVE"}}, {$group: {_id: "$staffId"}}, {$count: "totalActiveStaff"}])
+
+Part D
+
+Question D1
+
+db.appointments.createIndex({department: 1, status: 1})
+db.appointments.getIndexes()
+
+Question D2
+
+(a)db.appointments.updateMany({status: "CANCELLED"}, {$set: {status: "ARCHIVED"}})
+(b)db.loginSessions.deleteMany({status: "INACTIVE"})
+

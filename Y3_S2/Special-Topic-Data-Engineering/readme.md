@@ -1,4 +1,4 @@
-# 🚀 Special Topic in Data Engineering Portfolio
+# 🚀 Special Topic in Data Engineering 
 
 Welcome to my repository documenting my practical work, data pipelines, and assignments completed using modern big data technologies in my Special Topic in Data Engineering course.
 
